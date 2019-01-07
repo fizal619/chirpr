@@ -1,20 +1,24 @@
 <h1>Feed</h1>
 
-<form action="/posts" method="POST">
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <p> Body: </p>
-  <textarea name="body"> </textarea>
-  <p> User: </p>
-  <input name="user_id" type="number">
+<%= form_for @new_post, html: {class: "something", id: "fizal"} do |f| %>
+  <%= f.text_area :body %>
+
   <br>
-  <button>Submit</button>
-</form>
+
+  <%= f.collection_select(:user_id, User.all, :id, :username) %>
+
+  <br>
+  <%= f.submit "Create" %>
+<% end %>
 
 
 <div>
   <% @posts.each do |post| %>
     <p> <%= post.body %> </p>
-    <a href="/post/<%= post.id %>">DELETE </a>
+    <%= link_to "DELETE", '/posts/' + post.id.to_s, method: :delete, class: "btn" %>
+    <%= link_to  "EDIT", edit_post_path(post) %>
     <p> <b> Post by <%= post.user.username %> </b> </p>
+    <br>
+    <br>
   <% end %>
 </div>
