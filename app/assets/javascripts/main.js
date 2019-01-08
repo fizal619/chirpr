@@ -5,3 +5,11 @@ if (title) {
 }
 
 console.log('HELLO');
+
+let area = document.querySelector('textarea');
+
+if (area) {
+  area.addEventListener('keyup', function(e){
+    document.querySelector('#count_message').textContent = (140 - area.value.length) + " characters remaining!";
+  })
+}
