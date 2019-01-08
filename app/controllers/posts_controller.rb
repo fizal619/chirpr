@@ -5,7 +5,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    Post.create(post_params)
+    @temp = Post.create(post_params)
+    if @temp.valid?
+      flash[:notice] = "POST CREATED!"
+    else
+      flash[:notice] = "YOU TYPED TOO MUCH!"
+    end
     redirect_to '/'
   end
 

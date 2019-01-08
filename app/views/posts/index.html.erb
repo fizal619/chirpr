@@ -1,7 +1,7 @@
 <h1>Feed</h1>
 
 <%= form_for @new_post, html: {class: "something", id: "fizal"} do |f| %>
-  <%= f.text_area :body %>
+  <%= f.text_area :body, cols: 20, rows: 10 %>
 
   <br>
 
