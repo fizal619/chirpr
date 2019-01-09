@@ -1,23 +1,32 @@
 <h1>Feed</h1>
 
-<%= form_for @new_post, html: {class: "something", id: "fizal"} do |f| %>
-  <%= f.text_area :body, cols: 20, rows: 10 %>
+<div class="flex">
+  <div></div>
+  <div>
+    <% if current_user %>
+      <%= form_for @new_post, html: {class: "something", id: "fizal"} do |f| %>
+        <%= f.text_area :body, cols: 20, rows: 10, html: {id: 'create-post'} %>
+        <br>
+        <%= f.submit "Create" %>
+      <% end %>
 
-  <br>
+      <p id="count_message"> </p>
+    <% end %>
+  </div>
+  <div></div>
+</div>
 
-  <%= f.collection_select(:user_id, User.all, :id, :username) %>
 
-  <br>
-  <%= f.submit "Create" %>
-<% end %>
-
-<p id="count_message"> </p>
 
 <div>
   <% @posts.each do |post| %>
     <p> <%= post.body %> </p>
-    <%= link_to "DELETE", '/posts/' + post.id.to_s, method: :delete, class: "btn" %>
-    <%= link_to  "EDIT", edit_post_path(post) %>
+    <% if current_user %>
+      <% if current_user.id == post.user.id %>
+        <%= link_to "DELETE", '/posts/' + post.id.to_s, method: :delete, class: "button error" %>
+        <%= link_to  "EDIT", edit_post_path(post), class: "button warning" %>
+      <% end %>
+    <% end %>
     <p> <b> Post by <%= post.user.username %> </b> </p>
     <br>
     <br>

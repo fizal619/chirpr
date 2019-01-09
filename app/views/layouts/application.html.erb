@@ -4,19 +4,32 @@
     <title>Chirper</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="stylesheet" href="https://unpkg.com/picnic">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
   </head>
 
   <body>
     <h1> Chirper </h1>
-    <%= image_tag  "birb.svg", width: '100px' %>
+    <a href="/">
+      <%= image_tag  "birb.svg", width: '100px' %>
+    </a>
     <br>
 
-    <% if flash[:notice] %>
-      <div class="notice"><%= flash[:notice] %></div>
+    <% if signed_in? %>
+      <p>Signed in user: <%= current_user.username %></p>
+      <%= button_to 'Sign out', sign_out_path, method: :delete, class: "error" %>
+    <% else %>
+      <%= link_to 'Sign in', sign_in_path, class: "button" %>
     <% end %>
+
+    <div id="flash">
+      <% flash.each do |key, value| %>
+        <div class="flash <%= key %>"><%= value %></div>
+      <% end %>
+    </div>
+
+    <hr>
 
     <%= yield %>
 
